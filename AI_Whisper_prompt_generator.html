@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The AI Whisperer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+        }
+        
+        .title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #888;
+            margin-bottom: 20px;
+        }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .input-section, .output-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #4ecdc4;
+            font-weight: bold;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ccc;
+            font-weight: 500;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        select option {
+            background: #1a1a2e;
+            color: #ffffff;
+            padding: 8px;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #4ecdc4;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
+        }
+        
+        .generate-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+        
+        .output-area {
+            width: 100%;
+            min-height: 300px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            resize: vertical;
+        }
+        
+        .copy-btn {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: rgba(78, 205, 196, 0.2);
+            border: 1px solid #4ecdc4;
+            border-radius: 5px;
+            color: #4ecdc4;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background: rgba(78, 205, 196, 0.3);
+        }
+        
+        .psychology-tips {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 30px;
+        }
+        
+        .tip-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .tip-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #4ecdc4;
+        }
+        
+        .tip-title {
+            font-weight: bold;
+            color: #ff6b6b;
+            margin-bottom: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+            
+            .tip-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">The AI Whisperer</h1>
+            <p class="subtitle">Master AI's Secret Language</p>
+        </div>
+        
+        <div class="main-grid">
+            <div class="input-section">
+                <h2 class="section-title">🎯 Command Parameters</h2>
+                
+                <div class="form-group">
+                    <label for="objective">What do you want to achieve?</label>
+                    <input type="text" id="objective" placeholder="e.g., Build a landing page, Create viral content, Generate business ideas">
+                </div>
+                
+                <div class="form-group">
+                    <label for="tone">AI Persona/Tone</label>
+                    <select id="tone">
+                        <option value="expert">Expert Consultant</option>
+                        <option value="creative">Creative Genius</option>
+                        <option value="analyst">Strategic Analyst</option>
+                        <option value="coach">Personal Coach</option>
+                        <option value="maverick">Contrarian Thinker</option>
+                        <option value="builder">Technical Builder</option>
+                        <option value="marketer">Growth Hacker</option>
+                        <option value="teacher">Expert Teacher</option>
+                        <option value="copywriter">Expert Copywriter</option>
+                        <option value="salesperson">Master Salesperson</option>
+                        <option value="trader">Expert Trader</option>
+                        <option value="investor">Venture Capitalist</option>
+                        <option value="psychologist">Behavioral Psychologist</option>
+                        <option value="researcher">Research Scientist</option>
+                        <option value="negotiator">Elite Negotiator</option>
+                        <option value="entrepreneur">Serial Entrepreneur</option>
+                        <option value="philosopher">Strategic Philosopher</option>
+                        <option value="detective">Investigative Detective</option>
+                        <option value="designer">Design Mastermind</option>
+                        <option value="storyteller">Master Storyteller</option>
+                        <option value="hacker">Ethical Hacker</option>
+                        <option value="economist">Economic Strategist</option>
+                        <option value="futurist">Technology Futurist</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="context">Context/Background</label>
+                    <textarea id="context" rows="3" placeholder="Provide specific details, constraints, or background information..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="output-type">Desired Output Format</label>
+                    <select id="output-type">
+                        <option value="detailed">Detailed Step-by-Step</option>
+                        <option value="framework">Strategic Framework</option>
+                        <option value="creative">Creative Concepts</option>
+                        <option value="code">Code/Implementation</option>
+                        <option value="copy">Sales/Marketing Copy</option>
+                        <option value="analysis">Deep Analysis</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="constraints">Constraints/Requirements</label>
+                    <input type="text" id="constraints" placeholder="e.g., Under 500 words, No technical jargon, Include examples">
+                </div>
+                
+                <button class="generate-btn" onclick="generatePrompt()">🎯 Generate AI Whisper</button>
+            </div>
+            
+            <div class="output-section">
+                <h2 class="section-title">⚡ Your Whispered Command</h2>
+                <textarea class="output-area" id="output" readonly placeholder="Your psychologically-crafted prompt will appear here..."></textarea>
+                <button class="copy-btn" onclick="copyToClipboard()">📋 Copy Whisper</button>
+            </div>
+        </div>
+        
+        <div class="psychology-tips">
+            <h2 class="section-title">🧠 AI Whispering Principles Built-In</h2>
+            <div class="tip-grid">
+                <div class="tip-card">
+                    <div class="tip-title">Authority Bias</div>
+                    <div>Positions the AI as an expert in the specific domain you need</div>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-title">Constraint Leverage</div>
+                    <div>Uses specific limitations to force creative, focused solutions</div>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-title">Anchoring Effect</div>
+                    <div>Sets high-quality expectations and reference points upfront</div>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-title">Framing Control</div>
+                    <div>Shapes the context and perspective for optimal responses</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generatePrompt() {
+            const objective = document.getElementById('objective').value;
+            const tone = document.getElementById('tone').value;
+            const context = document.getElementById('context').value;
+            const outputType = document.getElementById('output-type').value;
+            const constraints = document.getElementById('constraints').value;
+            
+            if (!objective.trim()) {
+                alert('Please specify what you want to achieve!');
+                return;
+            }
+            
+            const personas = {
+                expert: "You are a world-class expert consultant with 20+ years of experience",
+                creative: "You are a creative genius known for breakthrough, unconventional ideas",
+                analyst: "You are a strategic analyst who sees patterns others miss",
+                coach: "You are a high-performance coach who pushes people to excellence",
+                maverick: "You are a contrarian thinker who challenges conventional wisdom",
+                builder: "You are a technical architect who builds scalable solutions",
+                marketer: "You are a growth hacker who creates viral, converting campaigns",
+                teacher: "You are an expert teacher who makes complex concepts crystal clear",
+                copywriter: "You are a master copywriter who crafts words that sell millions",
+                salesperson: "You are a master salesperson who closes 9-figure deals effortlessly",
+                trader: "You are an expert trader with 15+ years managing 8-figure portfolios across all markets",
+                investor: "You are a venture capitalist who spots billion-dollar opportunities",
+                psychologist: "You are a behavioral psychologist who understands human motivation",
+                researcher: "You are a research scientist who uncovers breakthrough insights",
+                negotiator: "You are an elite negotiator who wins impossible deals",
+                entrepreneur: "You are a serial entrepreneur who builds unicorn companies",
+                philosopher: "You are a strategic philosopher who questions fundamental assumptions",
+                detective: "You are an investigative detective who solves complex mysteries",
+                designer: "You are a design mastermind who creates unforgettable experiences",
+                storyteller: "You are a master storyteller who captivates any audience",
+                hacker: "You are an ethical hacker who finds vulnerabilities others miss",
+                economist: "You are an economic strategist who predicts market movements",
+                futurist: "You are a technology futurist who sees what's coming next"
+            };
+            
+            const outputFormats = {
+                detailed: "Provide a comprehensive, step-by-step breakdown with specific actions",
+                framework: "Create a strategic framework with clear components and implementation logic",
+                creative: "Generate multiple creative concepts with unique angles and approaches",
+                code: "Deliver working code/implementation with explanations and best practices",
+                copy: "Write compelling, conversion-focused copy that drives action",
+                analysis: "Conduct deep analysis with insights, implications, and recommendations"
+            };
+            
+            const psychologyTriggers = [
+                "Think like a master strategist would approach this challenge.",
+                "Consider unconventional angles most people would miss.",
+                "Apply first-principles thinking to break down the core elements.",
+                "Challenge assumptions and explore contrarian approaches.",
+                "Focus on high-leverage actions that create disproportionate results."
+            ];
+            
+            const randomTrigger = psychologyTriggers[Math.floor(Math.random() * psychologyTriggers.length)];
+            
+            let prompt = `${personas[tone]} specializing in ${objective.toLowerCase()}.
+
+CONTEXT: ${context || 'No additional context provided'}
+
+MISSION: ${objective}
+
+APPROACH: ${randomTrigger}
+
+OUTPUT REQUIREMENTS:
+${outputFormats[outputType]}`;
+            
+            if (constraints) {
+                prompt += `\n\nCONSTRAINTS: ${constraints}`;
+            }
+            
+            prompt += `\n\nIMPORTANT: 
+- Skip generic advice and focus on specific, actionable insights
+- Provide unique perspectives that most people wouldn't consider  
+- Include concrete examples or implementation details where relevant
+- Structure your response for maximum clarity and immediate application
+
+Begin your response with your most counterintuitive or valuable insight about this challenge.`;
+            
+            document.getElementById('output').value = prompt;
+        }
+        
+        function copyToClipboard() {
+            const output = document.getElementById('output');
+            output.select();
+            document.execCommand('copy');
+            
+            const btn = document.querySelector('.copy-btn');
+            const originalText = btn.textContent;
+            btn.textContent = '✅ Copied!';
+            setTimeout(() => {
+                btn.textContent = originalText;
+            }, 2000);
+        }
+        
+        // Add some example objectives on load
+        window.addEventListener('load', function() {
+            const examples = [
+                "Create a viral social media campaign",
+                "Build a SaaS landing page that converts",
+                "Generate 10 unique business ideas",
+                "Write a compelling sales email sequence",
+                "Design a customer onboarding flow",
+                "Create a content strategy for thought leadership"
+            ];
+            
+            const objectiveInput = document.getElementById('objective');
+            objectiveInput.placeholder = examples[Math.floor(Math.random() * examples.length)];
+        });
+    </script>
+</body>
+</html>
